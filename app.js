@@ -3,6 +3,8 @@ const buttonInsertText = document.querySelector(".btn-toggle");
 const divTextBox = document.querySelector(".text-box");
 const closeDivTextBox = document.querySelector(".close");
 const selectElement = document.querySelector("select");
+const buttonReadText = document.querySelector("#read");
+const textArea = document.querySelector("textarea");
 
 const humanExpressions = [
   { img: "./img/drink.jpg", text: "Estou com sede" },
@@ -84,3 +86,8 @@ closeDivTextBox.addEventListener("click", () => {
 });
 
 selectElement.addEventListener("change", setVoice);
+
+buttonReadText.addEventListener("click", () => {
+  setTextMessage(textArea.value);
+  speakText();
+});
