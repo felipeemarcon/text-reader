@@ -1,4 +1,7 @@
 const main = document.querySelector("main");
+const buttonInsertText = document.querySelector(".btn-toggle");
+const divTextBox = document.querySelector(".text-box");
+const closeDivTextBox = document.querySelector(".close");
 
 const humanExpressions = [
   { img: "./img/drink.jpg", text: "Estou com sede" },
@@ -28,3 +31,11 @@ const createExpressionBox = ({ img, text }) => {
 };
 
 humanExpressions.forEach(createExpressionBox);
+
+buttonInsertText.addEventListener("click", () => {
+  divTextBox.classList.add("show");
+});
+
+closeDivTextBox.addEventListener("click", () => {
+  divTextBox.classList.remove("show");
+});
