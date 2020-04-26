@@ -67,12 +67,19 @@ let voices = [];
 speechSynthesis.addEventListener("voiceschanged", () => {
   voices = speechSynthesis.getVoices();
 
+  const ptBrVoice = voices.find((voice) => voice.lang === "pt-BR");
+
   voices.forEach(({ name, lang }) => {
     const option = document.createElement("option");
 
     option.value = name;
-    option.textContent = `${lang} | ${name}`;
 
+    if (ptBrVoice && option.value === ptBrVoice.name) {
+      utterance.voice = ptBrVoice;
+      option.selected = true;
+    }
+
+    option.textContent = `${lang} | ${name}`;
     selectElement.appendChild(option);
   });
 });
