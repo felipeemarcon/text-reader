@@ -2,6 +2,7 @@ const main = document.querySelector("main");
 const buttonInsertText = document.querySelector(".btn-toggle");
 const divTextBox = document.querySelector(".text-box");
 const closeDivTextBox = document.querySelector(".close");
+const selectElement = document.querySelector("select");
 
 const humanExpressions = [
   { img: "./img/drink.jpg", text: "Estou com sede" },
@@ -31,6 +32,21 @@ const createExpressionBox = ({ img, text }) => {
 };
 
 humanExpressions.forEach(createExpressionBox);
+
+let voices = [];
+
+speechSynthesis.addEventListener("voiceschanged", () => {
+  voices = speechSynthesis.getVoices();
+
+  voices.forEach(({ name, lang }) => {
+    const option = document.createElement("option");
+
+    option.value = name;
+    option.textContent = `${lang} | ${name}`;
+
+    selectElement.appendChild(option);
+  });
+});
 
 buttonInsertText.addEventListener("click", () => {
   divTextBox.classList.add("show");
