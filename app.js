@@ -79,26 +79,33 @@ main.addEventListener("click", (event) => {
   }
 });
 
+const insertOptionElementsIntoDOM = (voices) => {
+  selectElement.innerHTML = voices.reduce((accumulator, { name, lang }) => {
+    accumulator += `<option value="${name}">${lang} | ${name}</option>`;
+    return accumulator;
+  }, "");
+};
+
+const setPTBRVoices = (voices) => {
+  const ptBrVoice = voices.find((voice) => voice.lang === "pt-BR");
+
+  if (ptBrVoice) {
+    utterance.voice = ptBrVoice;
+    const ptBrOptionElement = selectElement.querySelector(
+      `[value="${ptBrVoice.name}"]`
+    );
+
+    ptBrOptionElement.selected = true;
+  }
+};
+
 let voices = [];
 
 speechSynthesis.addEventListener("voiceschanged", () => {
   voices = speechSynthesis.getVoices();
 
-  const ptBrVoice = voices.find((voice) => voice.lang === "pt-BR");
-
-  voices.forEach(({ name, lang }) => {
-    const option = document.createElement("option");
-
-    option.value = name;
-
-    if (ptBrVoice && option.value === ptBrVoice.name) {
-      utterance.voice = ptBrVoice;
-      option.selected = true;
-    }
-
-    option.textContent = `${lang} | ${name}`;
-    selectElement.appendChild(option);
-  });
+  insertOptionElementsIntoDOM(voices);
+  setPTBRVoices(voices);
 });
 
 buttonInsertText.addEventListener("click", () => {
